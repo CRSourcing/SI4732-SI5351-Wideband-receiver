@@ -510,8 +510,8 @@ uint16_t buttonSelected = 1;  // 0-7 are available
 // Web
 uint8_t imageSelector = 0;
 bool swappedJPEG = false;
-const char* ssid = "IguanaAlemana";
-const char* password = "rembremerding";
+const char* ssid = "YourSSID";
+const char* password = "YourPW";
 int yShift = 0;
 int xShift = 0;
 int reportSelector = 0;

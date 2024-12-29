@@ -19,13 +19,13 @@ void mainScreen() {  // main screen does not block loop(), all other screens do
 void rebuildIndicators() {
 
   tft.fillRect(3, 52, 336, 30, TFT_BLACK);  // overwrite area for spectrum
-  tft.fillRect(3, 82, 336, 40, TFT_BLACK);  // overwrite area for waterfall
+  tft.fillRect(3, 82, 336, 41, TFT_BLACK);  // overwrite area for waterfall
   DrawSmeter();
   printModulation();
   printBandWidth();
   showTinySAMode();
   printAGC();
-  redrawMainScreen = true; // this forces   readSquelchPot() to redraw the squelch line and circle 
+  redrawMainScreen = true; // this forces readSquelchPot() to redraw the squelch line and circle 
   readSquelchPot(true);
   redrawMainScreen = false;
 }

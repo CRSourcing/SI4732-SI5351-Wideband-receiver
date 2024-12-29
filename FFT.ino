@@ -603,7 +603,7 @@ void audioSpectrum256() {  // 512 bin audio watefrall, displays 240 channels aft
   const int startX = 3;
   const int yOffset = 241;
   const int ampl = 80;
-  const float stretch = 1.39;
+  const float stretch = 1.39; // stretch width to 333 pixels
   int oldX = startX;
   int dmax = 30;
   int ctr = 0;
@@ -614,7 +614,7 @@ void audioSpectrum256() {  // 512 bin audio watefrall, displays 240 channels aft
   tft.fillRect(330, 8, 135, 15, TFT_BLACK);  // Overwrite microvolts
   tft.fillCircle(470, 20, 2, TFT_BLACK);     // overwrite serial communication indicator
   
-  tft.drawFastHLine(2, 81, 338, TFT_BLUE);   // draw separator bar
+  tft.drawFastHLine(2, 81, 338, TFT_SKYBLUE);   // draw separator bar
 
   framebuffer1 = (uint16_t*)heap_caps_malloc(FRAMEBUFFER_FULL_WIDTH * AUDIO_FRAMEBUFFER_HEIGHT * sizeof(uint16_t), MALLOC_CAP_DMA);
   if (framebuffer1 == NULL)
@@ -623,7 +623,7 @@ void audioSpectrum256() {  // 512 bin audio watefrall, displays 240 channels aft
   memset(framebuffer1, 0, FRAMEBUFFER_FULL_WIDTH * AUDIO_FRAMEBUFFER_HEIGHT * sizeof(uint16_t)); //black background
 
   for (int strX = 0; strX < FRAMEBUFFER_FULL_WIDTH; strX++) {
-    stretchedX[strX] = round(strX * stretch);  // Precalculate stretchedX;
+    stretchedX[strX] = round(strX * stretch);  // Precompute stretchedX;
   }
 
 
@@ -632,7 +632,7 @@ void audioSpectrum256() {  // 512 bin audio watefrall, displays 240 channels aft
     tft.fillRect(135, startY, 86, 25, TFT_NAVY);  //background mini osci
     ctr++;
 
-    if (ctr == 4) {
+    if (ctr == 4) { // 1 out of 4 loops
       ctr = 0;
       if (syncEnabled)
         printSSandMajorPeak();
@@ -741,24 +741,24 @@ void addLineToFramebuffer1(uint16_t* newLine) {
 
 //##########################################################################################################################//
 void updateDisp() {
-  const int upper = 84; // shiftwaterfall for slowScan
+  const int upper = 84; 
   const int lower = 124;
   const int startX = 3;
   const int endX = startX + FRAMEBUFFER_FULL_WIDTH;
-
+  const int lineWrap = 4;
   int oldX = 0;
 
   for (int x = startX; x < endX; x++) {
     int prevY = lower;
     int strX = stretchedX[x - startX] + startX;
-    int lstclrIndex = (currentLine - 4 + AUDIO_FRAMEBUFFER_HEIGHT) % AUDIO_FRAMEBUFFER_HEIGHT * FRAMEBUFFER_FULL_WIDTH + (x - startX);
+    int lstclrIndex = (currentLine - lineWrap + AUDIO_FRAMEBUFFER_HEIGHT) % AUDIO_FRAMEBUFFER_HEIGHT * FRAMEBUFFER_FULL_WIDTH + (x - startX);
     uint16_t lastColor = framebuffer1[lstclrIndex];
 
     for (int y = lower; y > upper; y--) {
-      int clrIndex = ((currentLine + y - 4 + AUDIO_FRAMEBUFFER_HEIGHT) % AUDIO_FRAMEBUFFER_HEIGHT) * FRAMEBUFFER_FULL_WIDTH + (x - startX);
+      int clrIndex = ((currentLine + y - lineWrap + AUDIO_FRAMEBUFFER_HEIGHT) % AUDIO_FRAMEBUFFER_HEIGHT) * FRAMEBUFFER_FULL_WIDTH + (x - startX);
       uint16_t color = framebuffer1[clrIndex];
 
-      if (color != lastColor || y == upper) {
+      if (color != lastColor || y == upper)  {
         int lineHeight = prevY - y;
 
         if (lastColor + color) {  // Not draw black lines
@@ -774,8 +774,11 @@ void updateDisp() {
     }
     oldX = strX;
   }
-}
 
+
+
+
+}
 //##########################################################################################################################//
 
 void audioFreqAnalyzer() {

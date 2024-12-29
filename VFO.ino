@@ -46,7 +46,7 @@ void clockDisplay() {  // diplays the clock frequency in the lower left corner
 
 
   if (OLD_LO_RX != LO_RX) {  // overwrite only when changed. This avoids flicker and
-    tft.fillRect(0, 296, 150, 23, TFT_BLACK);
+     tft.fillRect(0, 296, 130, 23, TFT_BLACK);
     OLD_LO_RX = LO_RX;
   }
 
@@ -236,14 +236,8 @@ void getFilterNumber() {
   for (int i = 0; i < filterCount; i++) {
     if (FREQKHz >= filter[i].startFreqKHz && FREQKHz <= filter[i].stopFreqKHz) {
 
-
       if (!manualInjectionMode) {
         LOAboveRF = filter[i].injectionMode;
-      }
-
-  
-      if (modType == LSB || modType == USB) {
-        loadSi4735parameters();  // Reload parameters if needed
       }
 
       filterNumber = filter[i].FilterNumber;

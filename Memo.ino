@@ -188,9 +188,8 @@ void memoAction(bool isWrite) {
       selected_band = -1;                   // remove selected band
       FREQ = preferences.getLong(fkey, 0);  // read frequency
       bandWidth = preferences.getInt(bkey, 0);
-
-
-
+      displayFREQ(FREQ);     // display new FREQ
+ 
       if (preferences.getChar(mkey, 0) != modType) {  // only reload when modType is different
         modType = preferences.getChar(mkey, 0);
         loadSi4735parameters();

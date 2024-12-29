@@ -1,7 +1,7 @@
 ﻿Here is the description of a wideband receiver project which covers 0.1-500 MHz. It is intended as an alternative to a SDR receiver. It fits in a small box and does not require
 a PC or RPi for signal processing.
 It uses ESP32, ILI9488 touch display, SI4732, SI5351 and AD831 as main components. A tinySA is used as optional panorama adapter. It uses potentiometers for volume, squelch and fine tune.
-It does include some nice features though, such as morse decoder, slow scan waterfall, memory bank scanning, web tools, etc.
+The software is a bit rough since I am not a programmer. It does include some nice features though, such as morse decoder, slow scan waterfall, memory bank scanning, web tools, etc.
 To build the hardware you must have experience with RF circuits and the appropiate toolset. For building the filters you need a network analyzer or nanoVNA.
 There is no schematics available, a lot of the hardware is based on try and error, but if you have experience with RF circuits you will be able to build it.
 

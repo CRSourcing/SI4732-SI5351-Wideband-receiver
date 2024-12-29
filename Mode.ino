@@ -350,6 +350,11 @@ void use1MhzEncoderStep() {  // press encoder for 1MHz steps, press again, or us
     OLDSTEP = STEP;
     STEP = 1000000;
     displaySTEP();  
+    if (modType != AM){ // must be AM
+    modType = AM;
+    printModulation();
+    loadSi4735parameters();
+     } 
     while (digitalRead(ENC_PRESSED) == LOW)
       ;
   }
